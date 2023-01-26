@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CategoryTextWidget extends StatelessWidget {
-  const CategoryTextWidget({super.key});
+  const CategoryTextWidget({super.key, this.categoryText});
+
+  final String? categoryText;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class CategoryTextWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Best Seller',
+            categoryText!,
             style: GoogleFonts.manrope(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w700,

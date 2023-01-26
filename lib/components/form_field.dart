@@ -7,12 +7,13 @@ class RFormField extends StatelessWidget {
     Key? key,
     this.hintText,
     this.obscureText,
-    this.topText,
+    this.topText, this.controller,
   }) : super(key: key);
 
   final String? hintText;
   final bool? obscureText;
   final String? topText;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,8 @@ class RFormField extends StatelessWidget {
           ),
         ),
         TextFormField(
+          
+          controller: controller,
           obscureText: obscureText ?? false,
           cursorColor: AppColors.backgroudColor,
           decoration: InputDecoration(

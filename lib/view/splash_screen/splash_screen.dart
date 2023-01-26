@@ -1,6 +1,8 @@
 import 'package:api_call/components/login_button.dart';
 import 'package:api_call/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -21,14 +23,18 @@ class SplashScreen extends StatelessWidget {
                 'https://res.cloudinary.com/dfnv0z3av/image/upload/v1673637923/Logo_Stroke_v2hmtp.png'),
             Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: LoginButtonWidget(
+                    action: () => Get.toNamed('/Login'),
                     buttonText: 'Login',
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offAllNamed('/Main');
+                   
+                  },
                   child: const Text(
                     'Skip',
                     style: TextStyle(color: AppColors.skipColor),

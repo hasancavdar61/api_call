@@ -5,9 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 class LoginButtonWidget extends StatelessWidget {
   const LoginButtonWidget({
     Key? key,
-    this.buttonText,
+    this.buttonText, this.action,
   }) : super(key: key);
   final String? buttonText;
+  final VoidCallback? action;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -16,7 +17,7 @@ class LoginButtonWidget extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.buttonColor,
             padding: const EdgeInsets.all(19.0)),
-        onPressed: () {},
+        onPressed: action,
         child: Text(
           buttonText ?? 'login or register',
           style:

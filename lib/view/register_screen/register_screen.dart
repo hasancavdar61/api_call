@@ -1,29 +1,46 @@
 import 'package:api_call/components/form_field.dart';
 import 'package:api_call/components/login_button.dart';
 import 'package:api_call/constants/colors.dart';
+import 'package:api_call/logic/riverpod_management.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final String imageLink =
       'https://res.cloudinary.com/dfnv0z3av/image/upload/v1673637923/Logo_Stroke_v2hmtp.png';
   bool value = false;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: LoginButtonWidget(buttonText: 'Register',),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: LoginButtonWidget(
+            action: () {
+              if (_formKey.currentState!.validate()) {
+                ref.read(registerRiverpod).register();
+              } else {
+                Get.snackbar(
+                  'Hata Oluştu',
+                  'Lütfen formu doğru şekilde doldurunuz',
+                  backgroundColor: Colors.teal,
+                  colorText: Colors.white,
+                );
+              }
+            },
+            buttonText: 'Register',
+          ),
         ),
       ),
       body: SafeArea(
@@ -62,25 +79,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: 80.0,
                 ),
                 Form(
+                  key: _formKey,
                   child: Column(
-                    children: const [
+                    children: [
                       RFormField(
+                        controller: ref.read(registerRiverpod).name,
                         topText: 'Name',
                         hintText: 'John Doe',
                         obscureText: false,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 24.0,
                       ),
                       RFormField(
+                        controller: ref.read(registerRiverpod).email,
                         topText: 'E-mail',
                         hintText: 'john@mail.com',
                         obscureText: false,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 24.0,
                       ),
                       RFormField(
+                        controller: ref.read(registerRiverpod).password,
                         topText: 'Password',
                         hintText: '......',
                         obscureText: true,

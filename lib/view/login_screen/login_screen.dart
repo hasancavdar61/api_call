@@ -1,29 +1,48 @@
 import 'package:api_call/components/form_field.dart';
 import 'package:api_call/components/login_button.dart';
 import 'package:api_call/constants/colors.dart';
+import 'package:api_call/logic/riverpod_management.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final String imageLink =
       'https://res.cloudinary.com/dfnv0z3av/image/upload/v1673637923/Logo_Stroke_v2hmtp.png';
   bool value = false;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: LoginButtonWidget(buttonText: 'Login',),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: LoginButtonWidget(
+            action: () {
+              if (_formKey.currentState!.validate()) {
+                ref.read(loginRiverpod).login();
+              } else {
+                Get.snackbar(
+                      'Hata Oluştu',
+                      'Lütfen formu doğru şekilde doldurunuz',
+                      backgroundColor: Colors.teal,
+                      colorText: Colors.white,
+                    );
+              }
+            },
+            buttonText: 'Login',
+          ),
         ),
       ),
       body: SafeArea(
@@ -62,17 +81,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 80.0,
                 ),
                 Form(
+                  key: _formKey,
                   child: Column(
-                    children: const [
+                    children: [
                       RFormField(
+                        controller: ref.watch(loginRiverpod).email,
                         topText: 'E-mail',
                         hintText: 'john@mail.com',
                         obscureText: false,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 24.0,
                       ),
                       RFormField(
+                        controller: ref.watch(loginRiverpod).password,
                         topText: 'Password',
                         hintText: '......',
                         obscureText: true,
@@ -94,6 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onChanged: ((newValue) {
                             setState(() {
                               value = newValue!;
+                              GetStorage().write('remember', value);
                             });
                           }),
                         ),
@@ -106,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => Get.toNamed('/Register'),
                       child: Text(
                         'Register',
                         style: GoogleFonts.manrope(
@@ -124,4 +147,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-

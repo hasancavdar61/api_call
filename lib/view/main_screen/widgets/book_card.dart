@@ -5,8 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class BookCardWidget extends StatelessWidget {
   const BookCardWidget({
-    Key? key,
+    Key? key, this.bookName, this.authorName, this.price,
   }) : super(key: key);
+
+  final String? bookName;
+  final String? authorName;
+  final double? price;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +53,7 @@ class BookCardWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 5.0),
                 child: Text(
-                  'Dune',
+                  bookName!,
                   style: GoogleFonts.manrope(
                     fontSize: 12.0,
                     fontWeight: FontWeight.w600,
@@ -62,7 +66,7 @@ class BookCardWidget extends StatelessWidget {
                   left: 5.0,
                 ),
                 child: Text(
-                  'Frank Herbert',
+                  authorName!,
                   style: GoogleFonts.manrope(
                     fontSize: 12.0,
                     fontWeight: FontWeight.w600,
@@ -74,7 +78,7 @@ class BookCardWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: Text(
-                  '87,75 \$',
+                  '$price \$',
                   style: GoogleFonts.manrope(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w700,
