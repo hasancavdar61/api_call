@@ -24,10 +24,12 @@ class CatalogChips extends StatelessWidget {
           Radius.circular(4.0),
         ),
       ),
-      child: Text(
-        chipText ?? 'chips',
-        style: GoogleFonts.manrope(
-            fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
+      child: Center(
+        child: Text(
+          chipText ?? 'chips',
+          style: GoogleFonts.manrope(
+              fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
+        ),
       ),
     );
   }
