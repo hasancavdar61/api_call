@@ -10,6 +10,15 @@ class LoginRiverpod extends ChangeNotifier {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
+/// Kullanıcı login fonksiyonu.
+/// Kullanıcıdan [TextEditingController] ile girdi alınır ve [POST] metoduyla
+/// [LoginService] ile endpointe gönderilir.
+/// Fonksiyon [.then] ile dönen [value] null değilse...
+/// [Get] paketiyle bir [snackbar] oluşturur ve kullanıcıya gösterilir.
+/// İşlem sorunsuz tamamlandığında anasayfaya yönlendirme yapılır.
+/// Yönlendirme metodu [Get.offAllNamed('/Main')].
+/// Hata olması halinde hata kullanıcıya gösterilir.
+
   void login() async {
     await service
         .loginCall(

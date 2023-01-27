@@ -2,6 +2,8 @@ import 'package:api_call/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//! Global şekilde kullanmak üzere tasarlanmış Button widgeti.
+
 class LoginButtonWidget extends StatelessWidget {
   const LoginButtonWidget({
     Key? key,

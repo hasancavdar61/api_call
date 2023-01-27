@@ -1,5 +1,4 @@
 import 'package:api_call/constants/colors.dart';
-import 'package:api_call/services/cover_service.dart';
 import 'package:api_call/services/register_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +12,10 @@ class RegisterRiverpod extends ChangeNotifier {
   String cover = '';
   List list = [];
 
+/// Kullanıcı kaydı fonksiyonu.
+/// Fonksiyon [.then] ile dönen [value] null değilse...
+/// [Get] paketiyle bir [snackbar] oluşturur ve kullanıcıya gösterilir.
+/// Hata olması halinde hata kullanıcıya gösterilir.
   void register() async {
     await service
         .registerCall(
@@ -34,18 +37,6 @@ class RegisterRiverpod extends ChangeNotifier {
           colorText: Colors.white,
         );
       }
-    });
-  }
-
-  void coverC() async {
-    await CoverService().cover(fileName: 'dune.png').then((value) {
-      if (value != null) {
-        value.actionProductImage.toJson().forEach((key, value) {
-          list = [value];
-          debugPrint(list.toString());
-          notifyListeners();
-        });
-      } else {}
     });
   }
 }

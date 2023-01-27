@@ -2,6 +2,8 @@ import 'package:api_call/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//! Global şekilde kullanmak üzere tasarlanmış FormField widgeti.
+
 class RFormField extends StatelessWidget {
   const RFormField({
     Key? key,

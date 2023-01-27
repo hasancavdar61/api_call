@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Uygulamada kullanılan bütün [Color] nesneleri burada tutulmaktadır.
+
 class AppColors {
   static const backgroudColor = Color(0xFF1D1D4E);
   static const buttonColor = Color(0xFFEF6B4A);

@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 class LoginService {
   final dio = Dio();
 
+  /// Endpointe istek [Dio] paketiyle atılır.
+/// [queryParameters] ile istenen argümanlar [POST] edilir.
+/// Eğer [response]'un [satusCode]'u 200'e eşitse değer [result] değişkenine
+/// atanır.
+
   Future<LoginModel?> loginCall({
     required String email,
     required String password,

@@ -6,6 +6,12 @@ import 'package:get/get.dart';
 class RegisterService {
   final dio = Dio();
 
+/// Endpointe istek [Dio] paketiyle atılır.
+/// [queryParameters] ile istenen argümanlar [POST] edilir.
+/// Eğer [response]'un [satusCode]'u 200'e eşitse değer [result] değişkenine
+/// atanır.
+/// Hata olması durumunda [statusCode == 400] controlü yapılır ve hata fırlatır.
+
   Future<RegisterModel?> registerCall({
     required String email,
     required String password,

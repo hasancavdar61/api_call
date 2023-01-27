@@ -34,7 +34,6 @@ class _CategoryDetailScreenState extends ConsumerState<CategoryDetailScreen> {
         throw (e);
       }
     });
-    ref.read(registerRiverpod).coverC();
 
     super.initState();
   }
@@ -116,7 +115,7 @@ class _CategoryDetailScreenState extends ConsumerState<CategoryDetailScreen> {
                               ),
                             ),
                             child: Image.network(
-                                ref.read(registerRiverpod).list[index]),
+                               links[index]),
                           ),
                         ),
                         Expanded(

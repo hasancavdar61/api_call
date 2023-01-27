@@ -18,7 +18,8 @@ class GetRouteService {
       ];
 }
 
-/// self create [gettingRoutes] method.
+/// GetPage metodunu daha işlevsel ve kısa yazmak için [gettingRoutes] metodu.
+
 GetPage<dynamic> gettingRoutes(String name, Widget pageGetter) => GetPage(
       name: name,
       page: () => pageGetter,

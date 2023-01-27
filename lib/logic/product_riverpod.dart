@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 class ProductRiverpod extends ChangeNotifier {
   final service = ProductService();
+
+/// Product verileri burada işlenir ve [productList] listesine atanır.
+
   int? id = 1;
   List productList = [];
   getProduct() async {
