@@ -8,6 +8,7 @@ import 'package:api_call/view/main_screen/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
@@ -20,6 +21,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   void initState() {
     ref.read(productRiverpod).getProduct();
+    
     super.initState();
   }
 
@@ -37,8 +39,16 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             return Column(
               children: [
                 CAppBar(
-                  prefixWidget: Image.network(
-                    'https://res.cloudinary.com/dfnv0z3av/image/upload/v1673637923/Logo_Stroke_v2hmtp.png',
+                  prefixWidget: GestureDetector(
+                    onTap: () {
+                      GetStorage().remove('remember');
+                      GetStorage().remove('token');
+                      debugPrint(GetStorage().read('remember'));
+                      debugPrint(GetStorage().read('token'));
+                    },
+                    child: Image.network(
+                      'https://res.cloudinary.com/dfnv0z3av/image/upload/v1673637923/Logo_Stroke_v2hmtp.png',
+                    ),
                   ),
                 ),
                 Padding(
@@ -72,6 +82,20 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                       return Column(
                         children: [
                           CategoryTextWidget(
+                            action: () {
+                              Get.toNamed('/CategoryDetail', arguments: [
+                                ref
+                                    .read(categoryRiverpod)
+                                    .categoryList[index]
+                                    .id
+                              ]);
+
+                              debugPrint(ref
+                                  .read(categoryRiverpod)
+                                  .categoryList[index]
+                                  .id
+                                  .toString());
+                            },
                             categoryText: ref
                                 .watch(categoryRiverpod)
                                 .categoryList[index]

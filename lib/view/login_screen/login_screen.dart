@@ -18,7 +18,11 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final String imageLink =
       'https://res.cloudinary.com/dfnv0z3av/image/upload/v1673637923/Logo_Stroke_v2hmtp.png';
-  bool value = false;
+
+  final rememberProvider = StateProvider((_) => false);
+  final checkboxProvider = Provider((ref) => false);
+  late var isChecked = Get.put(false);
+  final flag = false.obs;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -34,11 +38,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ref.read(loginRiverpod).login();
               } else {
                 Get.snackbar(
-                      'Hata Oluştu',
-                      'Lütfen formu doğru şekilde doldurunuz',
-                      backgroundColor: Colors.teal,
-                      colorText: Colors.white,
-                    );
+                  'Hata Oluştu',
+                  'Lütfen formu doğru şekilde doldurunuz',
+                  backgroundColor: Colors.teal,
+                  colorText: Colors.white,
+                );
               }
             },
             buttonText: 'Login',
@@ -107,19 +111,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   children: [
                     Row(
                       children: [
-                        Checkbox(
-                          fillColor:
-                              MaterialStateProperty.all(AppColors.logoColor),
-                          focusColor: AppColors.logoColor,
-                          checkColor: Colors.white,
-                          value: value,
-                          onChanged: ((newValue) {
-                            setState(() {
-                              value = newValue!;
-                              GetStorage().write('remember', value);
-                            });
-                          }),
-                        ),
+                        Obx(() => Checkbox(
+                              fillColor: MaterialStateProperty.all(
+                                  AppColors.logoColor),
+                              focusColor: AppColors.logoColor,
+                              checkColor: Colors.white,
+                              value: flag.value,
+                              onChanged: ((_) {
+                                flag.toggle();
+                                if (flag.value == true) {
+                                  GetStorage().write('remember', true);
+                                  debugPrint('saved');
+                                } else {
+                                  GetStorage().remove('remember');
+                                  debugPrint('removed');
+                                }
+                              }),
+                            )),
                         Text(
                           'Remember Me',
                           style: GoogleFonts.manrope(

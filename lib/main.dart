@@ -1,19 +1,36 @@
-import 'package:api_call/core/first_board.dart';
 import 'package:api_call/core/local_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() => runApp(const ProviderScope(child: MyApp()));
+Future<void> main() async {
+  await GetStorage.init();
 
-class MyApp extends StatelessWidget {
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        getPages: GetRouteService().routesGet,
-        debugShowCheckedModeBanner: false,
-        home: FirstBoard());
+      initialRoute: GetStorage().read('remember') != null &&
+              GetStorage().read('token') != null
+          ? '/Main'
+          : '/Splash',
+      getPages: GetRouteService().routesGet,
+      debugShowCheckedModeBanner: false,
+    );
   }
 }

@@ -17,8 +17,17 @@ class LoginRiverpod extends ChangeNotifier {
       password: password.text,
     )
         .then((value) {
-      if (value != null) {
+      if (value != null && GetStorage().read('remember') == true) {
         GetStorage().write('token', value.actionLogin.token);
+        Get.snackbar(
+          email.text,
+          'Welcome back!',
+          backgroundColor: AppColors.backgroudColor,
+          colorText: Colors.white,
+        );
+
+        Get.offAllNamed('/Main');
+      } else if (value != null) {
         Get.snackbar(
           email.text,
           'Welcome back!',

@@ -1,10 +1,43 @@
+import 'dart:math';
+
 import 'package:api_call/constants/colors.dart';
+import 'package:api_call/logic/riverpod_management.dart';
+import 'package:api_call/services/product_service.dart';
 import 'package:api_call/view/main_screen/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CategoryDetailScreen extends StatelessWidget {
+class CategoryDetailScreen extends ConsumerStatefulWidget {
   const CategoryDetailScreen({super.key});
+
+  @override
+  ConsumerState<CategoryDetailScreen> createState() =>
+      _CategoryDetailScreenState();
+}
+
+class _CategoryDetailScreenState extends ConsumerState<CategoryDetailScreen> {
+  var arg = Get.arguments[0];
+  String cover = '';
+
+  List productList = [];
+  String coverList = '';
+  @override
+  void initState() {
+    ProductService().getProduct(id: arg).then((value) {
+      if (value != null) {
+        setState(() {
+          productList = value.product;
+        });
+      } else {
+        throw (e);
+      }
+    });
+    ref.read(registerRiverpod).coverC();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +50,12 @@ class CategoryDetailScreen extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: Colors.white,
           toolbarHeight: 80.0,
-          leading: const Icon(
-            Icons.arrow_back_ios_new,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+            ),
             color: Colors.black,
+            onPressed: () => Get.back(),
           ),
           actions: [
             Padding(
@@ -53,7 +89,7 @@ class CategoryDetailScreen extends StatelessWidget {
               child: GridView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
-                itemCount: links.length,
+                itemCount: productList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 5,
@@ -79,12 +115,15 @@ class CategoryDetailScreen extends StatelessWidget {
                                 topLeft: Radius.circular(4.0),
                               ),
                             ),
-                            child: Image.network(links[index]),
+                            child: Image.network(
+                                ref.read(registerRiverpod).list[index]),
                           ),
                         ),
                         Expanded(
                           flex: 1,
                           child: Container(
+                            padding:
+                                const EdgeInsets.only(left: 20.0, right: 10.0),
                             height: double.infinity,
                             width: double.infinity,
                             decoration: const BoxDecoration(
@@ -94,7 +133,12 @@ class CategoryDetailScreen extends StatelessWidget {
                                 bottomLeft: Radius.circular(4.0),
                               ),
                             ),
-                            child: const Text('sdkjfhlsd'),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(productList[index].name),
+                              ],
+                            ),
                           ),
                         ),
                       ],

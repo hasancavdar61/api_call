@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CategoryTextWidget extends StatelessWidget {
-  const CategoryTextWidget({super.key, this.categoryText});
+  const CategoryTextWidget({super.key, this.categoryText, this.action});
 
   final String? categoryText;
+  final VoidCallback? action;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class CategoryTextWidget extends StatelessWidget {
                 color: AppColors.backgroudColor),
           ),
           TextButton(
-            onPressed: (() {}),
+            onPressed: (action),
             child: Text(
               'View All',
               style: GoogleFonts.manrope(
